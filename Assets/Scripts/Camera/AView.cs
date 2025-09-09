@@ -28,4 +28,6 @@ public abstract class AView : MonoBehaviour
             // remove
         }
     }
+
+    // add on draw gizmos
 }

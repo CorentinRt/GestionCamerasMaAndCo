@@ -9,7 +9,10 @@ public class CameraController : MonoBehaviour
     public static CameraController Instance;
 
     public Camera Camera;
-    private CameraConfiguration CameraConfiguration;
+    private CameraConfiguration _targetConfig;
+    private CameraConfiguration _smoothConfig;
+
+    [SerializeField] private float _smoothSpeed = 5f;
 
     private List<AView> _fixedViews = new List<AView>();
     // ----- FIELDS ----- //
@@ -25,17 +28,73 @@ public class CameraController : MonoBehaviour
         Instance = this;
     }
 
+    private void Start()
+    {
+
+    }
+
     private void Update()
     {
+        _targetConfig = ComputeAverage();
         ApplyConfiguration();
-        CameraConfiguration = ComputeAverage();
+    }
+
+    private void ComputeSmooth()
+    {
+        // Smooth position
+        if (_smoothSpeed * Time.deltaTime < 1f)
+        {
+            _smoothConfig.Pivot = Camera.transform.position + (_targetConfig.GetPosition() - Camera.transform.position) * _smoothSpeed * Time.deltaTime;
+        }
+        else
+        {
+            _smoothConfig.Pivot = _targetConfig.GetPosition();
+        }
+
+        // Smooth rotation
+        if (_smoothSpeed * Time.deltaTime < 1f)
+        {
+            _smoothConfig.Pitch = Camera.transform.rotation.eulerAngles.x + (_targetConfig.Pitch - Camera.transform.rotation.eulerAngles.x) * _smoothSpeed * Time.deltaTime;
+            _smoothConfig.Yaw = ComputeSmoothYaw();
+            _smoothConfig.Roll = Camera.transform.rotation.eulerAngles.z + (_targetConfig.Roll - Camera.transform.rotation.eulerAngles.z) * _smoothSpeed * Time.deltaTime;
+        }
+        else
+        {
+            _smoothConfig.Pitch = _targetConfig.GetRotation().eulerAngles.x;
+            _smoothConfig.Yaw = _targetConfig.GetRotation().eulerAngles.y;
+            _smoothConfig.Roll = _targetConfig.GetRotation().eulerAngles.z;
+        }
+
+        // Smooth FOV
+        if (_smoothSpeed * Time.deltaTime < 1f)
+        {
+            _smoothConfig.FOV = Camera.fieldOfView + (_targetConfig.FOV - Camera.fieldOfView) * _smoothSpeed * Time.deltaTime;
+        }
+        else
+        {
+            _smoothConfig.FOV = _targetConfig.FOV;
+        }
+    }
+
+    public float ComputeSmoothYaw()
+    {
+        Vector2 sum = Vector2.zero;
+
+        sum += new Vector2(Mathf.Cos(_targetConfig.Yaw * Mathf.Deg2Rad), Mathf.Sin(_targetConfig.Yaw * Mathf.Deg2Rad));
+        sum += new Vector2(Mathf.Cos(_smoothConfig.Yaw * Mathf.Deg2Rad), Mathf.Sin(_smoothConfig.Yaw * Mathf.Deg2Rad));
+
+        return Vector2.SignedAngle(Vector2.right, sum);
     }
 
     private void ApplyConfiguration()
     {
-        Camera.transform.position = CameraConfiguration.GetPosition();
-        Camera.transform.rotation = CameraConfiguration.GetRotation();
-        Camera.fieldOfView = CameraConfiguration.FOV;
+        ComputeSmooth();
+
+        Camera.transform.position = _smoothConfig.Pivot;
+
+        Camera.transform.rotation = _smoothConfig.GetRotation();
+
+        Camera.fieldOfView = _smoothConfig.FOV;
     }
 
     public void AddView(AView view)
@@ -59,7 +118,7 @@ public class CameraController : MonoBehaviour
     {
         Vector3 positionsAverage = ComputePositionAverage();
         Quaternion rotationAverage = ComputeRotationAverage();
-        float distanceAverage = ComputeDistanceAverage(); 
+        float distanceAverage = ComputeDistanceAverage();
         float fovAverage = ComputeFOVAverage(); 
 
         CameraConfiguration config = new CameraConfiguration();
@@ -104,7 +163,7 @@ public class CameraController : MonoBehaviour
             weightSum += view.Weight;
         }
 
-        return Quaternion.Euler(ComputeAverageYaw(), pitchSum / weightSum, rollSum / weightSum);
+        return Quaternion.Euler(pitchSum / weightSum, ComputeAverageYaw(), rollSum / weightSum); // GOOD
     }
 
     public float ComputeAverageYaw()
@@ -146,4 +205,9 @@ public class CameraController : MonoBehaviour
         return fovSum / fovWeightSum;
     }
     #endregion
+    public void OnDrawGizmos()
+    {
+        _targetConfig.DrawGizmos(Color.blue);
+    }
+
 }

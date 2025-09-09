@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 [System.Serializable]
-public struct CameraConfiguration 
+public struct CameraConfiguration
 {
     // ----- FIELDS ----- //
     public float Yaw;
@@ -19,7 +19,7 @@ public struct CameraConfiguration
 
     public Quaternion GetRotation()
     {
-        return Quaternion.Euler(Yaw, Pitch, Roll);  
+        return Quaternion.Euler(Pitch, Yaw, Roll);  
     }
 
     public Vector3 GetPosition()
@@ -38,10 +38,5 @@ public struct CameraConfiguration
         Gizmos.matrix = Matrix4x4.TRS(GetPosition(), GetRotation(), Vector3.one);
         Gizmos.DrawFrustum(Vector3.zero, FOV, 0.5f, 0f, Camera.main.aspect);
         Gizmos.matrix = Matrix4x4.identity;
-    }
-
-    public void OnDrawGizmos()
-    {
-        DrawGizmos(Color.blue);
     }
 }
