@@ -54,7 +54,8 @@ public class CameraController : MonoBehaviour
         // Smooth rotation
         if (_smoothSpeed * Time.deltaTime < 1f)
         {
-            _smoothConfig.Pitch = Camera.transform.rotation.eulerAngles.x + (_targetConfig.Pitch - Camera.transform.rotation.eulerAngles.x) * _smoothSpeed * Time.deltaTime;
+            //_smoothConfig.Pitch = Camera.transform.rotation.eulerAngles.x + (_targetConfig.Pitch - Camera.transform.rotation.eulerAngles.x) * _smoothSpeed * Time.deltaTime; // pas bon quand on monte le cube
+            _smoothConfig.Pitch = _targetConfig.GetRotation().eulerAngles.x;
             _smoothConfig.Yaw = ComputeSmoothYaw();
             _smoothConfig.Roll = Camera.transform.rotation.eulerAngles.z + (_targetConfig.Roll - Camera.transform.rotation.eulerAngles.z) * _smoothSpeed * Time.deltaTime;
         }
