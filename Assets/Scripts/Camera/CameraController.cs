@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
@@ -54,26 +55,17 @@ public class CameraController : MonoBehaviour
         // Smooth rotation
         if (_smoothSpeed * Time.deltaTime < 1f)
         {
-            //_smoothConfig.Pitch = Camera.transform.rotation.eulerAngles.x + (_targetConfig.Pitch - Camera.transform.rotation.eulerAngles.x) * _smoothSpeed * Time.deltaTime; // pas bon quand on monte le cube
-            _smoothConfig.Pitch = _targetConfig.GetRotation().eulerAngles.x;
+            _smoothConfig.Pitch = _smoothConfig.Pitch + (_targetConfig.Pitch - _smoothConfig.Pitch) * _smoothSpeed * Time.deltaTime; 
+            
             _smoothConfig.Yaw = ComputeSmoothYaw();
-            _smoothConfig.Roll = Camera.transform.rotation.eulerAngles.z + (_targetConfig.Roll - Camera.transform.rotation.eulerAngles.z) * _smoothSpeed * Time.deltaTime;
-        }
-        else
-        {
-            _smoothConfig.Pitch = _targetConfig.GetRotation().eulerAngles.x;
-            _smoothConfig.Yaw = _targetConfig.GetRotation().eulerAngles.y;
-            _smoothConfig.Roll = _targetConfig.GetRotation().eulerAngles.z;
-        }
 
-        // Smooth FOV
-        if (_smoothSpeed * Time.deltaTime < 1f)
-        {
-            _smoothConfig.FOV = Camera.fieldOfView + (_targetConfig.FOV - Camera.fieldOfView) * _smoothSpeed * Time.deltaTime;
+            _smoothConfig.Roll = _smoothConfig.Roll + (_targetConfig.Roll - _smoothConfig.Roll) * _smoothSpeed * Time.deltaTime;
+
+            _smoothConfig.FOV = _smoothConfig.FOV + (_targetConfig.FOV - _smoothConfig.FOV) * _smoothSpeed * Time.deltaTime;
         }
         else
         {
-            _smoothConfig.FOV = _targetConfig.FOV;
+            _smoothConfig = _targetConfig;
         }
     }
 
@@ -118,7 +110,7 @@ public class CameraController : MonoBehaviour
     public CameraConfiguration ComputeAverage()
     {
         Vector3 positionsAverage = ComputePositionAverage();
-        Quaternion rotationAverage = ComputeRotationAverage();
+        (float, float, float) rotationAverage = ComputeRotationAverage();
         float distanceAverage = ComputeDistanceAverage();
         float fovAverage = ComputeFOVAverage(); 
 
@@ -126,9 +118,9 @@ public class CameraController : MonoBehaviour
 
         config.Pivot = positionsAverage;
 
-        config.Yaw = rotationAverage.eulerAngles.y;
-        config.Pitch = rotationAverage.eulerAngles.x;
-        config.Roll = rotationAverage.eulerAngles.z;
+        config.Yaw = rotationAverage.Item2;
+        config.Pitch = rotationAverage.Item1;
+        config.Roll = rotationAverage.Item3;
 
         config.Distance = distanceAverage;
         config.FOV = fovAverage;
@@ -149,7 +141,7 @@ public class CameraController : MonoBehaviour
 
         return positionsSum / weightSum;
     }
-    private Quaternion ComputeRotationAverage()
+    private (float, float, float) ComputeRotationAverage()
     {
         float pitchSum = 0;
         float rollSum = 0;
@@ -164,7 +156,7 @@ public class CameraController : MonoBehaviour
             weightSum += view.Weight;
         }
 
-        return Quaternion.Euler(pitchSum / weightSum, ComputeAverageYaw(), rollSum / weightSum); // GOOD
+        return (pitchSum / weightSum, ComputeAverageYaw(), rollSum / weightSum);
     }
 
     public float ComputeAverageYaw()

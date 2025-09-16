@@ -26,8 +26,10 @@ public class FixedFollowView : AView
 
         Vector3 targetDirection = Target.position - transform.position;
         targetDirection = Vector3.Normalize(targetDirection);
+
         float targetYaw = Mathf.Atan2(targetDirection.x, targetDirection.z) * Mathf.Rad2Deg;
-        float targetPitch = -Mathf.Asin(targetDirection.y) * Mathf.Rad2Deg; 
+        float targetPitch = -Mathf.Asin(targetDirection.y) * Mathf.Rad2Deg;
+
 
         if (Mathf.Abs(centralYaw - targetYaw) > _yawOffsetMax)
         {
@@ -41,8 +43,9 @@ public class FixedFollowView : AView
             targetPitch = _pitchOffsetMax * Mathf.Sign(targetPitch - centralPitch);
         }
 
-        config.Pitch = targetPitch;
-        //config.Pitch = Mathf.Clamp(targetPitch, centralPitch - _pitchOffsetMax, centralPitch + _pitchOffsetMax);
+        //config.Pitch = targetPitch;
+        config.Pitch = Mathf.Clamp(targetPitch, centralPitch - _pitchOffsetMax, centralPitch + _pitchOffsetMax);
+
 
         config.Roll = Roll;
 

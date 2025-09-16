@@ -261,7 +261,7 @@ MonoBehaviour:
   Weight: 5
   IsActiveOnStart: 1
   Yaw: 0
-  Pitch: 0
+  Pitch: -12.66
   Roll: 0
   FOV: 60
 --- !u!4 &687073039

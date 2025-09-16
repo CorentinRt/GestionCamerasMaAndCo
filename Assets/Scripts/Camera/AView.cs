@@ -30,4 +30,9 @@ public abstract class AView : MonoBehaviour
     }
 
     // add on draw gizmos
+
+    private void OnDrawGizmos()
+    {
+        GetConfiguration().DrawGizmos(Color.red);
+    }
 }
