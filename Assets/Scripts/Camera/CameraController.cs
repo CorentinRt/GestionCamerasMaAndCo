@@ -45,7 +45,7 @@ public class CameraController : MonoBehaviour
         // Smooth position
         if (_smoothSpeed * Time.deltaTime < 1f)
         {
-            _smoothConfig.Pivot = Camera.transform.position + (_targetConfig.GetPosition() - Camera.transform.position) * _smoothSpeed * Time.deltaTime;
+            _smoothConfig.Pivot = _smoothConfig.Pivot + (_targetConfig.GetPosition() - _smoothConfig.Pivot) * _smoothSpeed * Time.deltaTime;
         }
         else
         {

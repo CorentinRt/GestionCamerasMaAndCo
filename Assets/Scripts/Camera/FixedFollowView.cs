@@ -43,7 +43,6 @@ public class FixedFollowView : AView
             targetPitch = _pitchOffsetMax * Mathf.Sign(targetPitch - centralPitch);
         }
 
-        //config.Pitch = targetPitch;
         config.Pitch = Mathf.Clamp(targetPitch, centralPitch - _pitchOffsetMax, centralPitch + _pitchOffsetMax);
 
 
