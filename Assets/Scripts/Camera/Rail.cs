@@ -132,6 +132,11 @@ public class Rail : MonoBehaviour
         } 
     }
 
+    public List<Transform> GetRailPoints()
+    {
+        return _railPoints;
+    }
+
 
     private void OnDrawGizmos()
     {

@@ -160,6 +160,7 @@ MonoBehaviour:
   Rail: {fileID: 1252296126}
   DistanceOnRail: 0
   Speed: 5
+  IsAuto: 1
 --- !u!4 &425511671
 Transform:
   m_ObjectHideFlags: 0

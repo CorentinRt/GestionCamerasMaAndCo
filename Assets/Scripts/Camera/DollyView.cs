@@ -15,14 +15,24 @@ public class DollyView : AView
     public float DistanceOnRail;
     public float Speed;
 
-    private float _currentRailDistance = 0f;
+    public bool IsAuto;
+
+    private Vector3 _nearestPoint;
     // ----- FIELDS ----- //
 
     public override CameraConfiguration GetConfiguration()
     {
         CameraConfiguration config = new CameraConfiguration();
-
-        config.Pivot = Rail.GetPosition(DistanceOnRail);
+        
+        if (IsAuto)
+        {
+            config.Pivot = Rail.GetPosition(GetNearestPointOnRail());
+        }
+        else
+        {
+            config.Pivot = Rail.GetPosition(DistanceOnRail);
+        }
+        
         Vector3 targetDirection = Target.position - config.Pivot;
         targetDirection = Vector3.Normalize(targetDirection);
 
@@ -45,18 +55,59 @@ public class DollyView : AView
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.A))
+        if (!IsAuto)
         {
-            // Less distance
-            DistanceOnRail -= Speed * Time.deltaTime;
+            if (Input.GetKey(KeyCode.A))
+            {
+                // Less distance
+                DistanceOnRail -= Speed * Time.deltaTime;
+            }
+
+            if (Input.GetKey(KeyCode.D))
+            {
+                // More distance
+                DistanceOnRail += Speed * Time.deltaTime;
+            }
+        }
+    }
+
+    public float GetNearestPointOnRail()
+{
+    float closestDistanceToTarget = float.MaxValue;
+    float distanceAlongRailToClosestPoint = 0f;
+
+    float accumulatedDistance = 0f;
+
+    List<Transform> points = Rail.GetRailPoints();
+    for (int i = 0; i < points.Count - 1; i++)
+    {
+        Vector3 a = points[i].position;
+        Vector3 b = points[i + 1].position;
+
+        Vector3 nearest = MathUtils.GetNearestPointOnSegment(a, b, Target.position);
+        float distanceToTarget = Vector3.Distance(Target.position, nearest);
+
+        float segmentLength = Vector3.Distance(a, b);
+        float t = Vector3.Distance(a, nearest) / segmentLength;
+
+        if (distanceToTarget < closestDistanceToTarget)
+        {
+            closestDistanceToTarget = distanceToTarget;
+            distanceAlongRailToClosestPoint = accumulatedDistance + t * segmentLength;
+            _nearestPoint = nearest; 
         }
 
-        if (Input.GetKey(KeyCode.D))
-        {
-            // More distance
-            DistanceOnRail += Speed * Time.deltaTime;
+        accumulatedDistance += segmentLength;
+    }
 
-        }
+    return distanceAlongRailToClosestPoint;
+}
+
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawSphere(_nearestPoint, .5f);
     }
 
 }
