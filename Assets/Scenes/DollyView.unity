@@ -151,15 +151,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3927b83b604cd8a4b9ab040dd595da65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Weight: 0
-  IsActiveOnStart: 0
+  Weight: 5
+  IsActiveOnStart: 1
   Roll: 0
   Distance: 0
-  FOV: 10
+  FOV: 30
   Target: {fileID: 1730080473}
   Rail: {fileID: 1252296126}
-  DistanceOnRail: 33.5
-  Speed: 0
+  DistanceOnRail: 0
+  Speed: 5
 --- !u!4 &425511671
 Transform:
   m_ObjectHideFlags: 0
@@ -649,7 +649,7 @@ Transform:
   m_GameObject: {fileID: 1730080469}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.8238935, y: -1.4596088, z: 19.67}
+  m_LocalPosition: {x: 4.06, y: -0.32, z: 23.66}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

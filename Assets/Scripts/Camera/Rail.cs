@@ -51,7 +51,8 @@ public class Rail : MonoBehaviour
 
     public Vector3 GetPosition(float distance)
     {
-        if (_railPoints.Count < 2) return _railPoints[0].position;
+        if (_railPoints.Count == 0) return Vector3.zero;
+        if (_railPoints.Count < 2 && _railPoints.Count == 1) return _railPoints[0].position;
 
         int targetIndex = 0;
         float totalLength = 0f;
