@@ -16,6 +16,8 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float _smoothSpeed = 5f;
 
     private List<AView> _fixedViews = new List<AView>();
+
+    private bool _isCutRequested;
     // ----- FIELDS ----- //
 
     private void Awake()
@@ -29,15 +31,25 @@ public class CameraController : MonoBehaviour
         Instance = this;
     }
 
-    private void Start()
-    {
-
-    }
 
     private void Update()
     {
         _targetConfig = ComputeAverage();
-        ApplyConfiguration();
+
+        if (_isCutRequested)
+        {
+            Camera.transform.position = _targetConfig.Pivot;
+            Camera.transform.rotation = _targetConfig.GetRotation();
+            Camera.fieldOfView = _targetConfig.FOV;
+
+            _smoothConfig = _targetConfig;
+
+            _isCutRequested = false;
+        }
+        else
+        {
+            ApplyConfiguration();
+        }
     }
 
     private void ComputeSmooth()
@@ -198,6 +210,12 @@ public class CameraController : MonoBehaviour
         return fovSum / fovWeightSum;
     }
     #endregion
+
+    public void Cut()
+    {
+        _isCutRequested = true;
+    }
+
     public void OnDrawGizmos()
     {
         _targetConfig.DrawGizmos(Color.blue);

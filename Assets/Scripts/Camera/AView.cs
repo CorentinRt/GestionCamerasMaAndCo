@@ -7,13 +7,8 @@ public abstract class AView : MonoBehaviour
     // ----- FIELDS ----- //
     public float Weight;
 
-    public bool IsActiveOnStart;
+    public bool IsCutOnSwitch;
     // ----- FIELDS ----- //
-
-    private void Start()
-    {
-        SetActive(IsActiveOnStart);
-    }
 
     public abstract CameraConfiguration GetConfiguration();
 
@@ -25,11 +20,15 @@ public abstract class AView : MonoBehaviour
         }
         else
         {
-            // remove
+            CameraController.Instance.RemoveView(this);
+        }
+
+        if (IsCutOnSwitch)
+        {
+            ViewVolumeBlender.Instance.UpdateVolumes();
+            CameraController.Instance.Cut();
         }
     }
-
-    // add on draw gizmos
 
     private void OnDrawGizmos()
     {
