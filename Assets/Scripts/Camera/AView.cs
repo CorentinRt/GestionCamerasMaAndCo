@@ -30,7 +30,7 @@ public abstract class AView : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
+    protected virtual void OnDrawGizmos()
     {
         GetConfiguration().DrawGizmos(Color.red);
     }

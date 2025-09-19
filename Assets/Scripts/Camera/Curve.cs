@@ -1,7 +1,8 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Curve : MonoBehaviour
+[System.Serializable]
+public class Curve
 {
     // ----- FIELDS ----- //
     public Vector3 A, B, C, D;
@@ -17,12 +18,7 @@ public class Curve : MonoBehaviour
         return localToWorldMatrix.MultiplyPoint(GetPosition(t));
     }
 
-    private void OnDrawGizmos()
-    {
-        DrawGizmos(Color.magenta, transform.localToWorldMatrix);
-    }
-
-    private void DrawGizmos(Color color, Matrix4x4 localToWorldMatrix)
+    public void DrawGizmos(Color color, Matrix4x4 localToWorldMatrix)
     {
         // Points :
         Vector3 aW = localToWorldMatrix.MultiplyPoint(A);
