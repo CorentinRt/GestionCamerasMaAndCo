@@ -701,15 +701,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 283888978594161275, guid: 10511856d1c6deb4799ce501b96033ff, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.77
+      value: 16.99
       objectReference: {fileID: 0}
     - target: {fileID: 283888978594161275, guid: 10511856d1c6deb4799ce501b96033ff, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.779
+      value: 2.24
       objectReference: {fileID: 0}
     - target: {fileID: 283888978594161275, guid: 10511856d1c6deb4799ce501b96033ff, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -31.512
+      value: -34.041
       objectReference: {fileID: 0}
     - target: {fileID: 283888978594161275, guid: 10511856d1c6deb4799ce501b96033ff, type: 3}
       propertyPath: m_LocalRotation.w
@@ -757,7 +757,11 @@ PrefabInstance:
       objectReference: {fileID: 5768952705734986013}
     - target: {fileID: 6933069276602746958, guid: 10511856d1c6deb4799ce501b96033ff, type: 3}
       propertyPath: _yawOffsetMax
-      value: 170
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 6933069276602746958, guid: 10511856d1c6deb4799ce501b96033ff, type: 3}
+      propertyPath: _pitchOffsetMax
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 8966701402154086791, guid: 10511856d1c6deb4799ce501b96033ff, type: 3}
       propertyPath: m_Name
@@ -1884,15 +1888,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 283888978594161275, guid: 10511856d1c6deb4799ce501b96033ff, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.312
+      value: 9.069
       objectReference: {fileID: 0}
     - target: {fileID: 283888978594161275, guid: 10511856d1c6deb4799ce501b96033ff, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.779
+      value: 2.729
       objectReference: {fileID: 0}
     - target: {fileID: 283888978594161275, guid: 10511856d1c6deb4799ce501b96033ff, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -31.284
+      value: -34.893
       objectReference: {fileID: 0}
     - target: {fileID: 283888978594161275, guid: 10511856d1c6deb4799ce501b96033ff, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1940,7 +1944,11 @@ PrefabInstance:
       objectReference: {fileID: 1475803652477350975}
     - target: {fileID: 6933069276602746958, guid: 10511856d1c6deb4799ce501b96033ff, type: 3}
       propertyPath: _yawOffsetMax
-      value: 170
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 6933069276602746958, guid: 10511856d1c6deb4799ce501b96033ff, type: 3}
+      propertyPath: _pitchOffsetMax
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 8966701402154086791, guid: 10511856d1c6deb4799ce501b96033ff, type: 3}
       propertyPath: m_Name
