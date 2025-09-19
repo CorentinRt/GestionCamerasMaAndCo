@@ -83,10 +83,10 @@ public class CameraController : MonoBehaviour
 
     public float ComputeSmoothYaw()
     {
-        Vector2 sum = Vector2.zero;
+        Vector2 target = new Vector2(Mathf.Cos(_targetConfig.Yaw * Mathf.Deg2Rad), Mathf.Sin(_targetConfig.Yaw * Mathf.Deg2Rad));
+        Vector2 smooth = new Vector2(Mathf.Cos(_smoothConfig.Yaw * Mathf.Deg2Rad), Mathf.Sin(_smoothConfig.Yaw * Mathf.Deg2Rad));
 
-        sum += new Vector2(Mathf.Cos(_targetConfig.Yaw * Mathf.Deg2Rad), Mathf.Sin(_targetConfig.Yaw * Mathf.Deg2Rad));
-        sum += new Vector2(Mathf.Cos(_smoothConfig.Yaw * Mathf.Deg2Rad), Mathf.Sin(_smoothConfig.Yaw * Mathf.Deg2Rad));
+        Vector2 sum = smooth + (target - smooth) * _smoothSpeed * Time.deltaTime;
 
         return Vector2.SignedAngle(Vector2.right, sum);
     }
@@ -123,6 +123,7 @@ public class CameraController : MonoBehaviour
     {
         Vector3 positionsAverage = ComputePositionAverage();
         (float, float, float) rotationAverage = ComputeRotationAverage();
+
         float distanceAverage = ComputeDistanceAverage();
         float fovAverage = ComputeFOVAverage(); 
 

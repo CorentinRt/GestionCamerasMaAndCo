@@ -36,6 +36,7 @@ public class FreeFollowView : AView
         config.Roll = _newRoll;
 
         config.FOV = _newFOV;
+
         config.Distance = Distance;
 
         return config;
@@ -43,23 +44,8 @@ public class FreeFollowView : AView
 
     private void Update()
     {
-        // Position
-        if (Input.GetAxis("Vertical") > 0.5f)
-        {
-            CurvePosition += CurveSpeed * Time.deltaTime;
-        }
-        else if (Input.GetAxis("Vertical") < -0.5)
-        {
-            CurvePosition -= CurveSpeed * Time.deltaTime;         
-        }
-
-        CurvePosition = Mathf.Clamp01(CurvePosition);
-        _newPosition = Curve.GetPosition(CurvePosition, GetCurveToWorldMatrix());
-
-        // Pitch, Roll & FOV
-        InterpolateRotation(CurvePosition);
-
         // Yaw 
+        
         if (Input.GetAxis("Horizontal") > 0.5f)
         {
             Yaw += YawSpeed * Time.deltaTime;
@@ -68,6 +54,22 @@ public class FreeFollowView : AView
         {
             Yaw -= YawSpeed * Time.deltaTime;
         }
+
+        // Position
+        if (Input.GetAxis("Mouse ScrollWheel") > 0.05f)
+        {
+            CurvePosition += CurveSpeed * Time.deltaTime;
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") < -0.05)
+        {
+            CurvePosition -= CurveSpeed * Time.deltaTime;         
+        }
+
+        CurvePosition = Mathf.Clamp01(CurvePosition);
+        _newPosition = Curve.GetPosition(CurvePosition, GetCurveToWorldMatrix());
+
+        // Pitch, Roll & FOV
+        InterpolateRotation(CurvePosition); 
     }
 
     private void InterpolateRotation(float percent)

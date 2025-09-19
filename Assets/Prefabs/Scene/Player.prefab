@@ -35,6 +35,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4241569263139557567}
+  - {fileID: 1792802158447812606}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8538038106432534722
@@ -134,9 +135,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &3481068394934755776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,7 +151,76 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  controls: 0
+  controls: 1
+--- !u!1 &7177664342959642481
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1792802158447812606}
+  - component: {fileID: 8986544086415867267}
+  m_Layer: 0
+  m_Name: FreeFollowView
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1792802158447812606
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7177664342959642481}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 863823538867061684}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8986544086415867267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7177664342959642481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a012e3955816d54e82e88a0cebab6d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Weight: 5
+  IsCutOnSwitch: 0
+  Pitch:
+  - -30
+  - 0
+  - 30
+  Roll:
+  - 0
+  - 0
+  - 0
+  FOV:
+  - 60
+  - 80
+  - 60
+  Yaw: 0
+  YawSpeed: 90
+  Target: {fileID: 5352054471651587403}
+  Curve:
+    A: {x: 0, y: -0.36, z: -2}
+    B: {x: 0, y: 1.19, z: -2.82}
+    C: {x: 0, y: 3.07, z: -3.33}
+    D: {x: 0, y: 4.7, z: -1.31}
+  CurvePosition: 0.5
+  CurveSpeed: 5
+  Distance: 0
 --- !u!1 &8899111508407063244
 GameObject:
   m_ObjectHideFlags: 0
