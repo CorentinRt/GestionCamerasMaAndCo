@@ -199,9 +199,9 @@ MonoBehaviour:
   Weight: 5
   IsCutOnSwitch: 0
   Pitch:
-  - -30
   - 0
-  - 30
+  - 20
+  - 60
   Roll:
   - 0
   - 0
