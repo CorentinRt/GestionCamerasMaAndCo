@@ -28,19 +28,35 @@ public class PlayerController : MonoBehaviour
         switch (controls)
         {
             case CONTROLS.CAMERA:
-                forward = Camera.main.transform.forward;
-                forward.y = 0;
-                forward.Normalize();
+                Vector3 camForward = Camera.main.transform.forward;
+                Vector3 camRight = Camera.main.transform.right;
 
-                right = Camera.main.transform.right;
-                right.y = 0;
-                right.Normalize();
+                camForward.y = 0;
+                camRight.y = 0;
 
+                if (camForward.sqrMagnitude < 0.01f || camRight.sqrMagnitude < 0.01f)
+                {
+                    forward = Vector3.forward;
+                    right = Vector3.right;
+                }
+                else
+                {
+                    forward = camForward.normalized;
+                    right = camRight.normalized;
+                }
+                break;
+
+            case CONTROLS.WORLD:
+                forward = Vector3.forward;
+                right = Vector3.right;
                 break;
         }
+
         direction += Input.GetAxisRaw("Horizontal") * right;
         direction += Input.GetAxisRaw("Vertical") * forward;
         direction.Normalize();
+
         _rigidbody.velocity = direction * speed + Vector3.up * _rigidbody.velocity.y;
     }
+
 }
