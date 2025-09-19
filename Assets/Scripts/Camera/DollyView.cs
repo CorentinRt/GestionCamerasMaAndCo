@@ -42,7 +42,7 @@ public class DollyView : AView
         float targetPitch = -Mathf.Asin(targetDirection.y) * Mathf.Rad2Deg;
         config.Pitch = targetPitch;
 
-        Debug.Log($"Pitch : {targetPitch}, Yaw : {targetYaw}");
+        //Debug.Log($"Pitch : {targetPitch}, Yaw : {targetYaw}");
 
         config.Roll = Roll;
 

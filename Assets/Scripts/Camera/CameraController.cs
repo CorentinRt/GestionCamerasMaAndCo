@@ -99,7 +99,10 @@ public class CameraController : MonoBehaviour
 
         Camera.transform.rotation = _smoothConfig.GetRotation();
 
-        Camera.fieldOfView = _smoothConfig.FOV;
+        if (_smoothConfig.FOV > 0f)
+        {
+            Camera.fieldOfView = _smoothConfig.FOV;
+        }
     }
 
     public void AddView(AView view)
