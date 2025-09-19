@@ -104,7 +104,7 @@ public class DollyView : AView
 }
 
 
-    private void OnDrawGizmos()
+    protected override void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
         Gizmos.DrawSphere(_nearestPoint, .5f);
