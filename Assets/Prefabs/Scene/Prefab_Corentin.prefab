@@ -133,6 +133,10 @@ PrefabInstance:
       propertyPath: _centralPoint
       value: 
       objectReference: {fileID: 5768952705734986013}
+    - target: {fileID: 6933069276602746958, guid: 10511856d1c6deb4799ce501b96033ff, type: 3}
+      propertyPath: _yawOffsetMax
+      value: 170
+      objectReference: {fileID: 0}
     - target: {fileID: 8966701402154086791, guid: 10511856d1c6deb4799ce501b96033ff, type: 3}
       propertyPath: m_Name
       value: FollowView_01 (1)
@@ -457,6 +461,10 @@ PrefabInstance:
       propertyPath: _centralPoint
       value: 
       objectReference: {fileID: 1475803652477350975}
+    - target: {fileID: 6933069276602746958, guid: 10511856d1c6deb4799ce501b96033ff, type: 3}
+      propertyPath: _yawOffsetMax
+      value: 170
+      objectReference: {fileID: 0}
     - target: {fileID: 8966701402154086791, guid: 10511856d1c6deb4799ce501b96033ff, type: 3}
       propertyPath: m_Name
       value: FollowView_01
