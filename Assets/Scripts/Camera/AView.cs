@@ -23,7 +23,7 @@ public abstract class AView : MonoBehaviour
             CameraController.Instance.RemoveView(this);
         }
 
-        if (IsCutOnSwitch)
+        if (IsCutOnSwitch && Weight != 0f)
         {
             ViewVolumeBlender.Instance.UpdateVolumes();
             CameraController.Instance.Cut();
