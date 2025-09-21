@@ -221,6 +221,8 @@ MonoBehaviour:
   CurvePosition: 0.5
   CurveSpeed: 5
   Distance: 0
+  _mouseSensitivityX: 2
+  _mouseSensitivityY: 1
 --- !u!1 &8899111508407063244
 GameObject:
   m_ObjectHideFlags: 0

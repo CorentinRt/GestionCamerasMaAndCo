@@ -23,6 +23,13 @@ public class FreeFollowView : AView
     public float Distance;
 
     private Vector3 _newPosition;
+
+    [Space]
+
+    [Header("Mouse parameters")]
+    [SerializeField] private float _mouseSensitivityX = 1f;
+    [SerializeField] private float _mouseSensitivityY = 1f;
+
     // ----- FIELDS ----- //
 
     public override CameraConfiguration GetConfiguration()
@@ -44,25 +51,28 @@ public class FreeFollowView : AView
 
     private void Update()
     {
-        // Yaw 
-        
-        if (Input.GetAxis("Horizontal") > 0.5f)
+        // Yaw
+        float mouseXDelta = Input.GetAxis("Mouse X");
+        float mouseYDelta = Input.GetAxis("Mouse Y");
+
+        if (Mathf.Abs(mouseXDelta) > 0f)
         {
-            Yaw += YawSpeed * Time.deltaTime;
-        }
-        else if (Input.GetAxis("Horizontal") < -0.5)
-        {
-            Yaw -= YawSpeed * Time.deltaTime;
+            Yaw += YawSpeed * Time.deltaTime * mouseXDelta * _mouseSensitivityX;
         }
 
         // Position
-        if (Input.GetAxis("Mouse ScrollWheel") > 0.05f)
+        //if (Input.GetAxis("Mouse ScrollWheel") > 0.05f)
+        //{
+        //    CurvePosition += CurveSpeed * Time.deltaTime;
+        //}
+        //else if (Input.GetAxis("Mouse ScrollWheel") < -0.05)
+        //{
+        //    CurvePosition -= CurveSpeed * Time.deltaTime;         
+        //}
+
+        if (Mathf.Abs(mouseYDelta) > 0f)
         {
-            CurvePosition += CurveSpeed * Time.deltaTime;
-        }
-        else if (Input.GetAxis("Mouse ScrollWheel") < -0.05)
-        {
-            CurvePosition -= CurveSpeed * Time.deltaTime;         
+            CurvePosition += CurveSpeed * Time.deltaTime * -mouseYDelta * _mouseSensitivityY;
         }
 
         CurvePosition = Mathf.Clamp01(CurvePosition);
