@@ -23,7 +23,7 @@ public class CursorManager : MonoBehaviour
         _instance = this;
     }
 
-    void Start()
+    void Update()
     {
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
