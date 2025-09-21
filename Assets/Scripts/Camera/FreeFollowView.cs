@@ -29,6 +29,10 @@ public class FreeFollowView : AView
     [Header("Mouse parameters")]
     [SerializeField] private float _mouseSensitivityX = 1f;
     [SerializeField] private float _mouseSensitivityY = 1f;
+    [SerializeField] private float _delayBeforePlayerCanControlView;
+    private bool _playerCanControlView;
+
+    private Coroutine _delayBeforeEnableControlViewCoroutine;
 
     // ----- FIELDS ----- //
 
@@ -49,31 +53,34 @@ public class FreeFollowView : AView
         return config;
     }
 
+    private void Start()
+    {
+        // Little delay to prevent init values of Axis Mouse X/Y to disturb start CurvePosition by too high value
+        StartDelayBeforeEnableControlViewCoroutine();
+    }
+
     private void Update()
     {
         // Yaw
         float mouseXDelta = Input.GetAxis("Mouse X");
         float mouseYDelta = Input.GetAxis("Mouse Y");
 
+        if (!_playerCanControlView)
+        {
+            mouseXDelta = 0f;
+            mouseYDelta = 0f;
+        }
+
         if (Mathf.Abs(mouseXDelta) > 0f)
         {
             Yaw += YawSpeed * Time.deltaTime * mouseXDelta * _mouseSensitivityX;
         }
 
-        // Position
-        //if (Input.GetAxis("Mouse ScrollWheel") > 0.05f)
-        //{
-        //    CurvePosition += CurveSpeed * Time.deltaTime;
-        //}
-        //else if (Input.GetAxis("Mouse ScrollWheel") < -0.05)
-        //{
-        //    CurvePosition -= CurveSpeed * Time.deltaTime;         
-        //}
-
         if (Mathf.Abs(mouseYDelta) > 0f)
         {
             CurvePosition += CurveSpeed * Time.deltaTime * -mouseYDelta * _mouseSensitivityY;
         }
+        Debug.Log($"Curve position is {CurvePosition.ToString()}", this);
 
         CurvePosition = Mathf.Clamp01(CurvePosition);
         _newPosition = Curve.GetPosition(CurvePosition, GetCurveToWorldMatrix());
@@ -113,5 +120,30 @@ public class FreeFollowView : AView
     private Matrix4x4 GetCurveToWorldMatrix()
     {
         return Matrix4x4.TRS(transform.position, Quaternion.Euler(0, Yaw, 0), Vector3.one);
+    }
+
+    private void StartDelayBeforeEnableControlViewCoroutine()
+    {
+        StopDelayBeforeEnableControlViewCoroutine();
+
+        _delayBeforeEnableControlViewCoroutine = StartCoroutine(DelayBeforeEnableControlViewCoroutine());
+    }
+
+    private void StopDelayBeforeEnableControlViewCoroutine()
+    {
+        if (_delayBeforeEnableControlViewCoroutine != null)
+        {
+            StopCoroutine(_delayBeforeEnableControlViewCoroutine);
+            _delayBeforeEnableControlViewCoroutine = null;
+        }
+    }
+
+    private IEnumerator DelayBeforeEnableControlViewCoroutine()
+    {
+        yield return new WaitForSeconds(_delayBeforePlayerCanControlView);
+
+        _playerCanControlView = true;
+
+        StopDelayBeforeEnableControlViewCoroutine();
     }
 }

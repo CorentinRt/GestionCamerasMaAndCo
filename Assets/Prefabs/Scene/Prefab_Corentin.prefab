@@ -1551,7 +1551,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6111247307732686086, guid: 45d962682c9fc4c429848d929e42774a, type: 3}
       propertyPath: FOV
-      value: 140
+      value: 170
       objectReference: {fileID: 0}
     - target: {fileID: 6111247307732686086, guid: 45d962682c9fc4c429848d929e42774a, type: 3}
       propertyPath: Yaw
@@ -1714,7 +1714,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6111247307732686086, guid: 45d962682c9fc4c429848d929e42774a, type: 3}
       propertyPath: FOV
-      value: 140
+      value: 170
       objectReference: {fileID: 0}
     - target: {fileID: 6111247307732686086, guid: 45d962682c9fc4c429848d929e42774a, type: 3}
       propertyPath: Yaw
