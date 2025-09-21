@@ -152,6 +152,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   controls: 1
+  freeFollowView: {fileID: 8986544086415867267}
 --- !u!1 &7177664342959642481
 GameObject:
   m_ObjectHideFlags: 0
