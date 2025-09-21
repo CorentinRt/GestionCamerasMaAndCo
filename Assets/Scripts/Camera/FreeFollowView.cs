@@ -80,7 +80,6 @@ public class FreeFollowView : AView
         {
             CurvePosition += CurveSpeed * Time.deltaTime * -mouseYDelta * _mouseSensitivityY;
         }
-        Debug.Log($"Curve position is {CurvePosition.ToString()}", this);
 
         CurvePosition = Mathf.Clamp01(CurvePosition);
         _newPosition = Curve.GetPosition(CurvePosition, GetCurveToWorldMatrix());

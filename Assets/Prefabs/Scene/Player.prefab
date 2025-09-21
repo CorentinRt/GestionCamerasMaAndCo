@@ -330,4 +330,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Camera: {fileID: 2822441750074954250}
-  _smoothSpeed: 5
+  _smoothSpeed: 3
